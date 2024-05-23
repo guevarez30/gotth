@@ -1,4 +1,4 @@
-package NavController
+package controllers
 
 import (
 	"app/templates/components"

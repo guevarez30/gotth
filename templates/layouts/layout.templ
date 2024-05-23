@@ -3,7 +3,7 @@ package layouts
 templ Layout(view templ.Component, isLoggedIn bool) {
 	<html>
 		@Head()
-		<body class="bg-primary-foreground">
+		<body id="page" class="bg-primary-foreground">
 			<div class="flex flex-col h-screen">
 				@Header(isLoggedIn)
 				@view
@@ -35,9 +35,19 @@ templ Header(isLoggedIn bool) {
 }
 
 templ Login() {
-	<button class="btn-primary">Log In</button>
+	<button
+		class="btn-primary"
+		hx-trigger="click"
+		hx-post="/login"
+		hx-target="#page"
+	>Log In</button>
 }
 
 templ UserAvatar() {
-	<div>user avatar </div>
+	<button
+		class="btn-secondary"
+		hx-trigger="click"
+		hx-post="/logout"
+		hx-target="#page"
+	>Log out</button>
 }

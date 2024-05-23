@@ -1,7 +1,7 @@
 package views
 
 import (
-	NavController "app/api/controllers"
+	"app/api/controllers"
 	"app/api/middleware"
 	"app/templates/components"
 	"app/templates/layouts"
@@ -9,6 +9,8 @@ import (
 
 	"github.com/a-h/templ"
 )
+
+var loggedIn = false
 
 // Render middleware calls templ.Handler with the provided component
 func Render(component templ.Component) http.Handler {
@@ -18,26 +20,48 @@ func Render(component templ.Component) http.Handler {
 	})
 }
 
-var RedirectToLogin = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	authHeader := r.Header.Get("Authorization")
-	if authHeader == "" {
-		component := layouts.Layout(Index(), false)
+var redirectToLogin = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	// authHeader := r.Header.Get("Authorization")
+	if loggedIn {
+		component := layouts.Layout(App(), true)
 		handler := templ.Handler(component)
 		handler.ServeHTTP(w, r)
 	} else {
-		component := layouts.Layout(App(), true)
+		component := layouts.Layout(Index(), false)
 		handler := templ.Handler(component)
 		handler.ServeHTTP(w, r)
 	}
 })
 
+func login() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		loggedIn = true
+		component := layouts.Layout(App(), true)
+		handler := templ.Handler(component)
+		handler.ServeHTTP(w, r)
+	})
+}
+
+func logout() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		loggedIn = false
+		component := layouts.Layout(Index(), false)
+		handler := templ.Handler(component)
+		handler.ServeHTTP(w, r)
+	})
+}
+
 func Routes(mux *http.ServeMux) {
 
-	mux.Handle("GET /", RedirectToLogin)
+	mux.Handle("GET /", redirectToLogin)
 
 	mux.Handle("POST /ping", Render(components.Ping()))
 
-	mux.Handle("GET /nav-items", middleware.Chain(NavController.GetItems))
+	mux.Handle("POST /login", login())
+
+	mux.Handle("POST /logout", logout())
+
+	mux.Handle("GET /nav-items", middleware.Chain(controllers.GetItems))
 
 	mux.Handle("GET /content", middleware.Chain(Render(components.Ping())))
 }
