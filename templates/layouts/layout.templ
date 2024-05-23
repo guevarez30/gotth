@@ -8,7 +8,9 @@ templ Layout(view templ.Component) {
 				@Header()
 				<section class="h-full container flex">
 					@NavBar()
-					@view
+					<div id="main-content">
+						@view
+					</div>
 				</section>
 			</div>
 		</body>
@@ -25,14 +27,13 @@ templ Head() {
 }
 
 templ Header() {
-	<header class="w-full p-4">
+	<header class="w-full p-4 border-b ">
 		<h1 class="font-mono text-2xl text-primary">App</h1>
 	</header>
 }
 
 templ NavBar() {
-	<div class="flex flex-col w-[10%] h-full">
-		<div class="text-primary">Opt 1</div>
-		<div class="text-primary">Opt 2</div>
+	<div class="flex flex-col w-[10%] h-full" hx-get="/nav-items" hx-trigger="load" hx-swap="innerHTML">
+		Loading
 	</div>
 }

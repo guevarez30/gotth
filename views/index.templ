@@ -1,15 +1,19 @@
 package views
 
-import (
-	"app/templates/components/ui"
-)
+import "app/templates/components/ui"
 
 templ Index() {
-	<div className="dark" class="m-2">
+	<div class="m-2">
 		<div class="font-mono h1 text-primary text-4xl font-bold">Index</div>
 		<div id="ping" class="text-primary m-2">
 			<div>hello this is really cool </div>
 		</div>
-		@ui.Button("button")
+		<div class="flex flex-col gap-2">
+			@ui.Card()
+		</div>
 	</div>
+}
+
+templ Content() {
+	<div>content </div>
 }

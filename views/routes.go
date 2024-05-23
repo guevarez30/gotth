@@ -1,6 +1,8 @@
 package views
 
 import (
+	NavController "app/api/controllers"
+	"app/api/middleware"
 	"app/templates/components"
 	"app/templates/layouts"
 	"net/http"
@@ -8,8 +10,21 @@ import (
 	"github.com/a-h/templ"
 )
 
-func Routes(mux *http.ServeMux) {
-	mux.Handle("GET /", templ.Handler(layouts.Layout(Index())))
+// Render middleware calls templ.Handler with the provided component
+func Render(component templ.Component) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handler := templ.Handler(component)
+		handler.ServeHTTP(w, r)
+	})
+}
 
-	mux.Handle("POST /ping", templ.Handler(components.Ping()))
+func Routes(mux *http.ServeMux) {
+
+	mux.Handle("GET /", Render(layouts.Layout(Index())))
+
+	mux.Handle("POST /ping", Render(components.Ping()))
+
+	mux.Handle("GET /nav-items", middleware.Chain(NavController.GetItems))
+
+	mux.Handle("GET /content", middleware.Chain(Render(components.Ping())))
 }

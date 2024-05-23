@@ -1,0 +1,14 @@
+package components
+
+templ NavItems(items []string) {
+	<ul>
+		for _, item := range items {
+			<li
+				class="text-primary hover:text-blue-100 hover:cursor"
+				hx-get="/content"
+				hx-target="#main-content"
+				hx-trigger="click"
+			>{ item }</li>
+		}
+	</ul>
+}

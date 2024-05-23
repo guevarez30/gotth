@@ -1,12 +1,27 @@
 package ui
 
-templ Button(text string) {
-	<button
-		type="button"
-		class="bg-destructive w-24 p-2 rounded-xl shadow-xl text-destructive-foreground font-bold"
-		hx-trigger="click"
-		hx-post="/ping"
-		hx-target="#ping"
-		hx-swap="innerHTML"
-	>{ text }</button>
+templ Card() {
+	<div>
+		<button
+			type="button"
+			class="btn-warning"
+			hx-trigger="click"
+			hx-post="/ping"
+			hx-swap="innerHTML"
+		>Ping </button>
+		<button
+			type="button"
+			class="btn-secondary"
+			hx-trigger="click"
+			hx-post="/ping"
+			hx-swap="innerHTML"
+		>Ping </button>
+		<button
+			type="button"
+			class="btn-primary"
+			hx-trigger="click"
+			hx-post="/ping"
+			hx-swap="innerHTML"
+		>Ping </button>
+	</div>
 }

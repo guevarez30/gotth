@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func Button(text string) templ.Component {
+func Card() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -23,20 +23,7 @@ func Button(text string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"button\" class=\"bg-destructive w-24 p-2 rounded-xl shadow-xl text-destructive-foreground font-bold\" hx-trigger=\"click\" hx-post=\"/ping\" hx-target=\"#ping\" hx-swap=\"innerHTML\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(text)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/components/ui/button.templ`, Line: 11, Col: 8}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div><button type=\"button\" class=\"btn-warning\" hx-trigger=\"click\" hx-post=\"/ping\" hx-swap=\"innerHTML\">Ping </button> <button type=\"button\" class=\"btn-secondary\" hx-trigger=\"click\" hx-post=\"/ping\" hx-swap=\"innerHTML\">Ping </button> <button type=\"button\" class=\"btn-primary\" hx-trigger=\"click\" hx-post=\"/ping\" hx-swap=\"innerHTML\">Ping </button></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
