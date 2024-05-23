@@ -1,0 +1,12 @@
+package ui
+
+templ Button(text string) {
+	<button
+		type="button"
+		class="bg-emerald-700 w-24 p-2 rounded-xl shadow-xl text-white font-bold"
+		hx-trigger="click"
+		hx-post="/ping"
+		hx-target="#ping"
+		hx-swap="innerHTML"
+	>{ text }</button>
+}
