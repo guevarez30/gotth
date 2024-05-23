@@ -1,17 +1,12 @@
 package layouts
 
-templ Layout(view templ.Component) {
+templ Layout(view templ.Component, isLoggedIn bool) {
 	<html>
 		@Head()
 		<body class="bg-primary-foreground">
 			<div class="flex flex-col h-screen">
-				@Header()
-				<section class="h-full container flex">
-					@NavBar()
-					<div id="main-content">
-						@view
-					</div>
-				</section>
+				@Header(isLoggedIn)
+				@view
 			</div>
 		</body>
 	</html>
@@ -26,14 +21,8 @@ templ Head() {
 	</head>
 }
 
-templ Header() {
+templ Header(isLoggedIn bool) {
 	<header class="w-full p-4 border-b ">
 		<h1 class="font-mono text-2xl text-primary">App</h1>
 	</header>
-}
-
-templ NavBar() {
-	<div class="flex flex-col w-[10%] h-full" hx-get="/nav-items" hx-trigger="load" hx-swap="innerHTML">
-		Loading
-	</div>
 }
