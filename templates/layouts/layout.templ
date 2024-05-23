@@ -1,0 +1,38 @@
+package layouts
+
+templ Layout(view templ.Component) {
+	<html>
+		@Head()
+		<body class="bg-primary-foreground">
+			<div class="flex flex-col h-screen">
+				@Header()
+				<section class="h-full container flex">
+					@NavBar()
+					@view
+				</section>
+			</div>
+		</body>
+	</html>
+}
+
+templ Head() {
+	<head>
+		<meta charset="utf-8"/>
+		<title>App</title>
+		<link href="/static/style.css" rel="stylesheet"/>
+		<script src="https://unpkg.com/htmx.org@1.9.9"></script>
+	</head>
+}
+
+templ Header() {
+	<header class="w-full p-4">
+		<h1 class="font-mono text-2xl text-primary">App</h1>
+	</header>
+}
+
+templ NavBar() {
+	<div class="flex flex-col w-[10%] h-full">
+		<div class="text-primary">Opt 1</div>
+		<div class="text-primary">Opt 2</div>
+	</div>
+}

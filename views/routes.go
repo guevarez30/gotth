@@ -2,19 +2,14 @@ package views
 
 import (
 	"app/templates/components"
+	"app/templates/layouts"
+	"net/http"
 
-	"github.com/labstack/echo/v4"
+	"github.com/a-h/templ"
 )
 
-func Routes(e *echo.Echo) {
-	e.GET("/", func(c echo.Context) error {
-		components.Layout(Index()).Render(c.Request().Context(), c.Response())
-		return nil
-	})
-	e.POST("/ping", Ping)
-}
+func Routes(mux *http.ServeMux) {
+	mux.Handle("GET /", templ.Handler(layouts.Layout(Index())))
 
-func Ping(c echo.Context) error {
-	components.Ping().Render(c.Request().Context(), c.Response())
-	return nil
+	mux.Handle("POST /ping", templ.Handler(components.Ping()))
 }

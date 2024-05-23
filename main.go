@@ -10,8 +10,6 @@ import (
 	"os"
 	"os/signal"
 	"time"
-
-	"github.com/labstack/echo/v4"
 )
 
 //go:embed static
@@ -27,27 +25,29 @@ func Static() http.Handler {
 }
 
 func main() {
-	e := echo.New()
-	e.GET("/static/*", echo.WrapHandler(http.StripPrefix("/static/", Static())))
+	mux := http.NewServeMux()
+	mux.Handle("GET /static/", http.StripPrefix("/static/", Static()))
 
-	// bind views to the server
-	views.Routes(e)
+	// Bind views to the server
+	views.Routes(mux)
 
-	// Start server
+	server := &http.Server{
+		Addr:    fmt.Sprintf("localhost:%s", os.Getenv("PORT")),
+		Handler: mux,
+	}
+
 	go func() {
-		if err := e.Start(fmt.Sprintf("localhost:%s", os.Getenv("PORT"))); err != nil && err != http.ErrServerClosed {
-			e.Logger.Fatal("shutting down the server", err)
+		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			fmt.Printf("Error starting server: %s\n", err)
 		}
 	}()
 
-	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 10 seconds.
-	// Use a buffered channel to avoid missing signals as recommended for signal.Notify
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	if err := e.Shutdown(ctx); err != nil {
-		e.Logger.Fatal(err)
+	if err := server.Shutdown(ctx); err != nil {
+		fmt.Printf("Server shutdown error: %s\n", err)
 	}
 }
