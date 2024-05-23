@@ -18,24 +18,22 @@ func Render(component templ.Component) http.Handler {
 	})
 }
 
-func RedirectToLogin() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		authHeader := r.Header.Get("Authorization")
-		if authHeader == "" {
-			component := layouts.Layout(Index(), false)
-			handler := templ.Handler(component)
-			handler.ServeHTTP(w, r)
-		} else {
-			component := layouts.Layout(App(), true)
-			handler := templ.Handler(component)
-			handler.ServeHTTP(w, r)
-		}
-	})
-}
+var RedirectToLogin = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	authHeader := r.Header.Get("Authorization")
+	if authHeader == "" {
+		component := layouts.Layout(Index(), false)
+		handler := templ.Handler(component)
+		handler.ServeHTTP(w, r)
+	} else {
+		component := layouts.Layout(App(), true)
+		handler := templ.Handler(component)
+		handler.ServeHTTP(w, r)
+	}
+})
 
 func Routes(mux *http.ServeMux) {
 
-	mux.Handle("GET /", RedirectToLogin())
+	mux.Handle("GET /", RedirectToLogin)
 
 	mux.Handle("POST /ping", Render(components.Ping()))
 
