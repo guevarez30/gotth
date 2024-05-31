@@ -10,6 +10,8 @@ import "context"
 import "io"
 import "bytes"
 
+import "app/templates/components"
+
 func NavBar() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -83,7 +85,15 @@ func Content() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"m-2\"><div class=\"font-mono h1 text-primary text-4xl font-bold\">App</div><div id=\"ping\" class=\"text-primary m-2\"><div>hello this is really cool </div></div><button type=\"button\" class=\"btn-primary\" hx-trigger=\"click\" hx-post=\"/ping\" hx-swap=\"innerHTML\" hx-target=\"#ping\">Ping </button></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"m-2\"><div class=\"font-mono h1 text-primary text-4xl font-bold\">App</div><div id=\"ping\" class=\"text-primary m-2\"><div>hello this is really cool </div></div><button type=\"button\" class=\"btn-primary\" hx-trigger=\"click\" hx-post=\"/ping\" hx-swap=\"innerHTML\" hx-target=\"#ping\">Ping </button> some change")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = components.PopUp().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -30,9 +30,9 @@ func Routes(mux *http.ServeMux) {
 
 	mux.Handle("GET /", redirectToLogin)
 
-	mux.Handle("POST /login", middleware.Chain(controllers.Login))
+	mux.Handle("POST /login", controllers.Login)
 
-	mux.Handle("POST /logout", middleware.Chain(controllers.Logout))
+	mux.Handle("POST /logout", controllers.Logout)
 
 	// Auth Required
 	mux.Handle("POST /ping", middleware.Chain(controllers.Ping, middleware.AuthRequired))
