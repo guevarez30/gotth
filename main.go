@@ -1,7 +1,7 @@
 package main
 
 import (
-	"app/views"
+	"app/api"
 	"context"
 	"embed"
 	"fmt"
@@ -29,7 +29,7 @@ func main() {
 	mux.Handle("GET /static/", http.StripPrefix("/static/", Static()))
 
 	// Bind views to the server
-	views.Routes(mux)
+	api.Routes(mux)
 
 	server := &http.Server{
 		Addr:    fmt.Sprintf("localhost:%s", os.Getenv("PORT")),

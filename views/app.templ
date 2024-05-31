@@ -1,7 +1,5 @@
 package views
 
-import "app/templates/components/ui"
-
 templ NavBar() {
 	<div class="flex flex-col w-[10%] h-full" hx-get="/nav-items" hx-trigger="load" hx-swap="innerHTML">
 		Loading
@@ -9,22 +7,25 @@ templ NavBar() {
 }
 
 templ App() {
-	<section class="h-full container flex">
-		@NavBar()
-		<div id="main-content">
-			@Content()
-		</div>
-	</section>
+	@NavBar()
+	<div id="main-content">
+		@Content()
+	</div>
 }
 
 templ Content() {
 	<div class="m-2">
-		<div class="font-mono h1 text-primary text-4xl font-bold">Index</div>
+		<div class="font-mono h1 text-primary text-4xl font-bold">App</div>
 		<div id="ping" class="text-primary m-2">
 			<div>hello this is really cool </div>
 		</div>
-		<div class="flex flex-col gap-2">
-			@ui.Card()
-		</div>
+		<button
+			type="button"
+			class="btn-primary"
+			hx-trigger="click"
+			hx-post="/ping"
+			hx-swap="innerHTML"
+			hx-target="#ping"
+		>Ping </button>
 	</div>
 }

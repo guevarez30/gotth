@@ -6,7 +6,9 @@ templ Layout(view templ.Component, isLoggedIn bool) {
 		<body id="page" class="bg-primary-foreground">
 			<div class="flex flex-col h-screen">
 				@Header(isLoggedIn)
-				@view
+				<section class="h-full container flex">
+					@view
+				</section>
 			</div>
 		</body>
 	</html>

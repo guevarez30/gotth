@@ -1,9 +1,18 @@
 package views;
 
 templ Index() {
-	<section class="h-full container flex">
-		<div id="main-content">
-			Must log in
+	<div class="m-2">
+		<div class="font-mono h1 text-primary text-4xl font-bold">Index</div>
+		<div id="ping" class="text-primary m-2">
+			<div>Must log in </div>
 		</div>
-	</section>
+		<button
+			type="button"
+			class="btn-warning"
+			hx-trigger="click"
+			hx-post="/ping"
+			hx-swap="innerHTML"
+			hx-target="#ping"
+		>Ping </button>
+	</div>
 }

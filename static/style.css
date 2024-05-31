@@ -678,10 +678,6 @@ video {
   justify-content: space-between;
 }
 
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .border-b {
   border-bottom-width: 1px;
 }
