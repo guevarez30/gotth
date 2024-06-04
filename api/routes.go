@@ -3,7 +3,6 @@ package api
 import (
 	"app/api/controllers"
 	"app/api/middleware"
-	"app/templates/layouts"
 	"net/http"
 
 	"app/views"
@@ -11,16 +10,14 @@ import (
 	"github.com/a-h/templ"
 )
 
-var loggedIn = false
-
 var redirectToLogin = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	_, err := r.Cookie("exampleCookie")
 	if err != nil {
-		component := layouts.Layout(views.Index(), false)
+		component := views.Layout(views.Index(), false)
 		handler := templ.Handler(component)
 		handler.ServeHTTP(w, r)
 	} else {
-		component := layouts.Layout(views.App(), true)
+		component := views.Layout(views.App(), true)
 		handler := templ.Handler(component)
 		handler.ServeHTTP(w, r)
 	}
@@ -32,6 +29,8 @@ func Routes(mux *http.ServeMux) {
 
 	mux.Handle("POST /login", controllers.Login)
 
+	mux.Handle("GET /login", controllers.LoginForm)
+
 	mux.Handle("POST /logout", controllers.Logout)
 
 	// Auth Required
@@ -40,4 +39,6 @@ func Routes(mux *http.ServeMux) {
 	mux.Handle("GET /nav-items", middleware.Chain(controllers.NavItems, middleware.AuthRequired))
 
 	mux.Handle("GET /content", middleware.Chain(controllers.Ping, middleware.AuthRequired))
+
+	mux.Handle("GET /close/popup", middleware.Chain(controllers.ClosePopup, middleware.AuthRequired))
 }

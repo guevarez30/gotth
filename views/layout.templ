@@ -1,4 +1,4 @@
-package layouts
+package views
 
 templ Layout(view templ.Component, isLoggedIn bool) {
 	<html>
@@ -7,6 +7,7 @@ templ Layout(view templ.Component, isLoggedIn bool) {
 			<div class="flex flex-col h-screen">
 				@Header(isLoggedIn)
 				<section class="h-full container flex">
+					<div id="popup"></div>
 					@view
 				</section>
 			</div>
@@ -40,8 +41,11 @@ templ Login() {
 	<button
 		class="btn-primary"
 		hx-trigger="click"
-		hx-post="/login"
+		hx-get="/login"
 		hx-target="#page"
+		type="button"
+		hx-swap="innerHTML"
+		hx-target="#popup"
 	>Log In</button>
 }
 

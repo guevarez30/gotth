@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"app/templates/components"
-	"app/templates/layouts"
-	"app/views"
+	"app/components"
 	"net/http"
 
 	"github.com/a-h/templ"
@@ -22,36 +20,5 @@ var NavItems = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 var Ping = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 	component := components.Ping()
-	Render(component, w, r)
-})
-
-var Login = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	cookie := http.Cookie{
-		Name:     "exampleCookie",
-		Value:    "Hello world!",
-		Path:     "/",
-		MaxAge:   600,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, &cookie)
-
-	component := layouts.Layout(views.App(), true)
-	Render(component, w, r)
-})
-
-var Logout = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	cookie := http.Cookie{
-		Name:     "exampleCookie",
-		Value:    "Hello world!",
-		Path:     "/",
-		MaxAge:   -1,
-		HttpOnly: true,
-		Secure:   true,
-		SameSite: http.SameSiteLaxMode,
-	}
-	http.SetCookie(w, &cookie)
-	component := layouts.Layout(views.Index(), false)
 	Render(component, w, r)
 })

@@ -1,7 +1,5 @@
 package views
 
-import "app/templates/components"
-
 templ NavBar() {
 	<div class="flex flex-col w-[10%] h-full" hx-get="/nav-items" hx-trigger="load" hx-swap="innerHTML">
 		Loading
@@ -29,7 +27,13 @@ templ Content() {
 			hx-swap="innerHTML"
 			hx-target="#ping"
 		>Ping </button>
-		some change
-		@components.PopUp()
+		<button
+			type="button"
+			class="btn-secondary"
+			hx-trigger="click"
+			hx-get="/popup"
+			hx-swap="innerHTML"
+			hx-target="#popup"
+		>Pop Up </button>
 	</div>
 }
