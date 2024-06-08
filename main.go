@@ -12,7 +12,6 @@ import (
 	"time"
 )
 
-//go:embed static
 var static embed.FS
 
 func Static() http.Handler {
